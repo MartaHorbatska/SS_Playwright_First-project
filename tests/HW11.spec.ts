@@ -10,10 +10,20 @@ import { test, expect } from '@playwright/test';
 
 test("test1_example.com validation", async ({ page }) => {
     await page.goto('https://example.com/');
-    await expect(page).toHaveTitle('Example Domain');
+    const title = await page.title();
+    expect(title).toBe('Example Domain');
     const currentUrl = page.url();
     expect(currentUrl).toContain('example.com');
-    await expect(page.locator('body')).toContainText('This domain is for use in illustrative examples');
+    const bodyText = await page.locator('body').innerText();
+    expect(bodyText).toMatch(/This domain is for use in illustrative examples/);
+    await expect(page.locator('h1')).toHaveText('Example Domain');
+});
+
+test("test1_example.com validation2", async ({ page }) => {
+    await page.goto('https://example.com/');
+    expect(await page.title()).toBe('Example Domain');
+    expect(page.url()).toContain('example.com');
+    expect(await page.locator('body').innerText()).toMatch(/This domain is for use in illustrative examples/);
     await expect(page.locator('h1')).toHaveText('Example Domain');
   });
 
@@ -42,16 +52,13 @@ test("test2_playwright.dev validation", async ({ page }) => {
 test("test3_search in Google", async ({ page }) => {
   await page.goto('https://www.google.com');
   const acceptBtn = page.getByRole('button', { name: /прийняти/i });
-  if (await acceptBtn.isVisible()) {
-    await acceptBtn.click();
+  if (await page.getByRole('button', { name: /прийняти/i }).isVisible()) {
+    await page.getByRole('button', { name: /прийняти/i }).click();
   }
-  const searchField = page.locator('input[name="q"]');
-  await searchField.fill('Playwright');
-  await searchField.press('Enter');
-  const results = page.locator('#search'); // Google завжди рендерить блок з ID "search"
-  await expect(results).toBeVisible();
-  const firstResult = results.locator('text=Playwright').first();
-  await expect(firstResult).toBeVisible();
+  await page.locator('input[name="q"]').fill('Playwright');
+  await page.locator('input[name="q"]').press('Enter');
+  await expect(page.locator('#search')).toBeVisible();
+  await expect(page.locator('#search').locator('text=Playwright').first()).toBeVisible();
 });
 
 /* Task 4.
