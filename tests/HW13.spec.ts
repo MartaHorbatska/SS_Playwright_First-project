@@ -33,15 +33,12 @@ test('POST - create new post', async ({ request }) => {
       title: 'Awesome title',
       userId: 10,
     };
-  
     const response = await request.post('/posts/add', {
       data: postData,
     });
   
     expect(response).toBeOK();
-  
     const body = await response.json();
-  
     expect(body.title).toBe('Awesome title');
     expect(body.userId).toBe(10);
   });
