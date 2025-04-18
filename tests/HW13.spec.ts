@@ -8,7 +8,7 @@ import { test, expect, request } from '@playwright/test';
 § Переконайтеся, що в тілі відповіді міститься об’єкт "data" з ключем "last_name" зі значенням "Weaver"
 § Переконайтеся, що в тілі відповіді міститься об’єкт "data" з ключем "email" зі значенням "janet.weaver@reqres.in" */
 
-test('GET https://reqres.in/api/users/2 - validate user data', async ({ request }) => {
+test('GET - validate user data', async ({ request }) => {
     const response = await request.get('https://reqres.in/api/users/2');
     expect(response.ok()).toBeTruthy();
   
@@ -28,7 +28,7 @@ test('GET https://reqres.in/api/users/2 - validate user data', async ({ request 
 § Переконайтеся за допомогою відповіді від сервера, що створено новий пост, який має title зі значенням "Awesome title"
 § Переконайтеся за допомогою відповіді від сервера, що створено новий пост, який має userId зі значенням 10 */
 
-test('POST https://dummyjson.com/posts/add - create new post', async ({ request }) => {
+test('POST - create new post', async ({ request }) => {
     const postData = {
       title: 'Awesome title',
       userId: 10,
