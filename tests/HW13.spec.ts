@@ -34,7 +34,7 @@ test('POST - create new post', async ({ request }) => {
       userId: 10,
     };
   
-    const response = await request.post('https://dummyjson.com/posts/add', {
+    const response = await request.post('/posts/add', {
       data: postData,
     });
   
