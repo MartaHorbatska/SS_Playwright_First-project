@@ -10,7 +10,7 @@ import { test, expect, request } from '@playwright/test';
 
 test('GET - validate user data', async ({ request }) => {
     const response = await request.get('https://reqres.in/api/users/2');
-    expect(response.ok()).toBeTruthy();
+    expect(response).toBeOK();
   
     const body = await response.json();
   
@@ -38,7 +38,7 @@ test('POST - create new post', async ({ request }) => {
       data: postData,
     });
   
-    expect(response.ok()).toBeTruthy();
+    expect(response).toBeOK();
   
     const body = await response.json();
   
